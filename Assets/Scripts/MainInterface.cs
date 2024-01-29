@@ -34,29 +34,7 @@ public class MainInterface : MonoBehaviour
         { KeyCode.Alpha8, 8 },
         { KeyCode.Alpha9, 9 },
     };
-
-    /*
-	KEY_0 = 0,  // 0
-	KEY_1,      // 1
-	KEY_2,      // 2
-	KEY_3,      // 3
-	KEY_4,      // 4
-	KEY_5,      // 5
-	KEY_6,      // 6
-	KEY_7,      // 7
-	KEY_8,      // 8
-	KEY_9,      // 9
-	KEY_MENU,   // A 10
-	KEY_UP,     // B 11
-	KEY_DOWN,   // C 12
-	KEY_EXIT,   // D 13
-	KEY_STAR,   // * 14
-	KEY_F,      // # 15
-	KEY_PTT,    // 16
-	KEY_SIDE2,  // 17
-	KEY_SIDE1,  // 18
-	KEY_INVALID // 19  
-     */
+    private bool txLocked = true;
 
     public static Canvas Canvas { get; private set; }
 
@@ -64,6 +42,7 @@ public class MainInterface : MonoBehaviour
     public RawImage lcd;
     public Canvas canvas;
     public Image lcdBorder;
+    public Text txLock;
 
     void Start()
     {
@@ -118,6 +97,10 @@ public class MainInterface : MonoBehaviour
     {
         switch (key) 
         {
+            case 20:
+                txLocked = !txLocked;
+                txLock.text = txLocked ? "TX\r\nLOCK" : "TX\r\nOK";
+                break;
             case 0:
             case 1:
             case 2:
@@ -134,10 +117,13 @@ public class MainInterface : MonoBehaviour
             case 13:
             case 14:
             case 15:
-            case 16:
             case 17:
             case 18:
                 Serial.SendCommand(Packet.KeyPress, (ushort)key);
+                break;
+            case 16:
+                if(!txLocked)
+                    Serial.SendCommand(Packet.KeyPress, (ushort)16);
                 break;
             default:
                 break;

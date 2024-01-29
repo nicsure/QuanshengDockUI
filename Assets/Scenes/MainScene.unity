@@ -1997,7 +1997,7 @@ GameObject:
   - component: {fileID: 462537469}
   - component: {fileID: 462537468}
   m_Layer: 5
-  m_Name: ButTxLock
+  m_Name: But20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7590,6 +7590,7 @@ MonoBehaviour:
   lcd: {fileID: 2117975301}
   canvas: {fileID: 1876677862}
   lcdBorder: {fileID: 920680127}
+  txLock: {fileID: 1766088931}
 --- !u!1 &1939339197
 GameObject:
   m_ObjectHideFlags: 0
