@@ -10,6 +10,54 @@ using UnityEngine.UI;
 
 public class MainInterface : MonoBehaviour
 {
+    private Dictionary<KeyCode, int> shortcuts = new () 
+    {
+        { KeyCode.Space, 16 },
+        { KeyCode.Escape, 13 },
+        { KeyCode.Backspace, 13 },
+        { KeyCode.Delete, 13 },
+        { KeyCode.UpArrow, 11 },
+        { KeyCode.DownArrow, 12 },
+        { KeyCode.Menu, 10 },
+        { KeyCode.Return, 10 },
+        { KeyCode.KeypadEnter, 10 },
+        { KeyCode.Tab, 18 },
+        { KeyCode.F, 15 },
+        { KeyCode.Alpha0, 0 },
+        { KeyCode.Alpha1, 1 },
+        { KeyCode.Alpha2, 2 },
+        { KeyCode.Alpha3, 3 },
+        { KeyCode.Alpha4, 4 },
+        { KeyCode.Alpha5, 5 },
+        { KeyCode.Alpha6, 6 },
+        { KeyCode.Alpha7, 7 },
+        { KeyCode.Alpha8, 8 },
+        { KeyCode.Alpha9, 9 },
+    };
+
+    /*
+	KEY_0 = 0,  // 0
+	KEY_1,      // 1
+	KEY_2,      // 2
+	KEY_3,      // 3
+	KEY_4,      // 4
+	KEY_5,      // 5
+	KEY_6,      // 6
+	KEY_7,      // 7
+	KEY_8,      // 8
+	KEY_9,      // 9
+	KEY_MENU,   // A 10
+	KEY_UP,     // B 11
+	KEY_DOWN,   // C 12
+	KEY_EXIT,   // D 13
+	KEY_STAR,   // * 14
+	KEY_F,      // # 15
+	KEY_PTT,    // 16
+	KEY_SIDE2,  // 17
+	KEY_SIDE1,  // 18
+	KEY_INVALID // 19  
+     */
+
     public static Canvas Canvas { get; private set; }
 
     public Button settingsButton;
@@ -33,6 +81,20 @@ public class MainInterface : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (canvas.enabled)
+        {
+            foreach(var key in shortcuts.Keys)
+            {
+                if (Input.GetKeyDown(key))
+                    FunctionDown(shortcuts[key]);
+                if (Input.GetKeyUp(key))
+                    FunctionUp(shortcuts[key]);
+            }
+        }
+    }
+    
     private static int ButtonValue(Button b)
     {
         if (!b.name.StartsWith("But")) return -1;
@@ -43,6 +105,17 @@ public class MainInterface : MonoBehaviour
     public void OnPointerDown(Button b)
     {
         int key = ButtonValue(b);
+        FunctionDown(key);
+    }
+
+    public void OnPointerUp(Button b)
+    {
+        int key = ButtonValue(b);
+        FunctionUp(key);
+    }
+
+    public void FunctionDown(int key)
+    {
         switch (key) 
         {
             case 0:
@@ -71,9 +144,8 @@ public class MainInterface : MonoBehaviour
         }
     }
 
-    public void OnPointerUp(Button b)
+    public void FunctionUp(int key)
     {
-        int key = ButtonValue(b);
         switch (key)
         {
             case 0:

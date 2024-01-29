@@ -52,7 +52,7 @@ public class SettingsInterface : MonoBehaviour
         BackPicker.onColorChange.AddListener(OnBackChanged);
         ForePicker.onColorChange.AddListener(OnForeChanged);
         foreach (var dev in Microphone.devices)
-            Debug.Log($"Device: {dev}");
+            Debug.Log($"Device: {dev}");        
         PlayAudio();
     }
 
