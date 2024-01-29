@@ -51,8 +51,6 @@ public class SettingsInterface : MonoBehaviour
         OkayButton.onClick.AddListener(OnOkayClick);
         BackPicker.onColorChange.AddListener(OnBackChanged);
         ForePicker.onColorChange.AddListener(OnForeChanged);
-        foreach (var dev in Microphone.devices)
-            Debug.Log($"Device: {dev}");        
         PlayAudio();
     }
 

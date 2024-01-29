@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,6 +36,7 @@ public class MainInterface : MonoBehaviour
         { KeyCode.Alpha9, 9 },
     };
     private bool txLocked = true;
+    private bool ptt = false;
 
     public static Canvas Canvas { get; private set; }
 
@@ -64,7 +66,7 @@ public class MainInterface : MonoBehaviour
     {
         if (canvas.enabled)
         {
-            foreach(var key in shortcuts.Keys)
+            foreach (var key in shortcuts.Keys)
             {
                 if (Input.GetKeyDown(key))
                     FunctionDown(shortcuts[key]);
@@ -122,8 +124,8 @@ public class MainInterface : MonoBehaviour
                 Serial.SendCommand(Packet.KeyPress, (ushort)key);
                 break;
             case 16:
-                if(!txLocked)
-                    Serial.SendCommand(Packet.KeyPress, (ushort)16);
+                if (!txLocked)
+                    _ = TxPulser();
                 break;
             default:
                 break;
@@ -153,10 +155,22 @@ public class MainInterface : MonoBehaviour
             case 16:
             case 17:
             case 18:
+                ptt = false;
                 Serial.SendCommand(Packet.KeyPress, (ushort)19);
                 break;
             default:
                 break;
+        }
+    }
+
+    private async Task TxPulser()
+    {
+        if (ptt) return;
+        ptt = true;
+        while (ptt)
+        {
+            Serial.SendCommand(Packet.KeyPress, (ushort)16);
+            await Task.Delay(125);
         }
     }
 
