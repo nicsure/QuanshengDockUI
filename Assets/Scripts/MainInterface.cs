@@ -39,11 +39,12 @@ public class MainInterface : MonoBehaviour
     private bool ptt = false;
 
     public static Canvas Canvas { get; private set; }
+    public static Image Led { get; private set; } = null;
 
     public Button settingsButton;
     public RawImage lcd;
     public Canvas canvas;
-    public Image lcdBorder;
+    public Image lcdBorder, led;
     public Text txLock;
 
     void Start()
@@ -52,6 +53,7 @@ public class MainInterface : MonoBehaviour
         settingsButton.onClick.AddListener(new(SettingsClick));
         LCD.LcdImage = lcd;
         LCD.LcdBorder = lcdBorder;
+        Led = led;
         for (int i = 0; i < canvas.transform.childCount; i++)
         {
             Transform child = canvas.transform.GetChild(i);

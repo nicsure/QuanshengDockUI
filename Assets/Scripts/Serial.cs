@@ -212,14 +212,18 @@ public static class Serial
                 {
                     case 1:
                         ps = "T";
+                        if (MainInterface.Led != null) MainInterface.Led.color = Color.red;
                         break;
                     case 2:
                         ps = "R";
+                        if (MainInterface.Led != null) MainInterface.Led.color = Color.green;
                         break;
                     case 4:
                         ps = "PS";
+                        if (MainInterface.Led != null) MainInterface.Led.color = Color.black;
                         break;
                     default:
+                        if (MainInterface.Led != null) MainInterface.Led.color = Color.black;
                         break;
                 }
                 LCD.DrawText(0, 0, 0.5, ps);
